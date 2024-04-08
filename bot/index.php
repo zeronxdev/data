@@ -1,5 +1,13 @@
 <?php
-if (isset($_GET['ip']) && isset($_GET['port']) && isset($_GET['thread']) && isset($_GET['time'])) {
+if (isset($_GET['action']) && $_GET['action'] === 'kill') {
+    exec('sudo pkill -9 -f python3', $output, $return_var);
+
+    if ($return_var == 0) {
+        echo "All Python processes killed successfully.";
+    } else {
+        echo "Failed to kill Python processes.";
+    }
+} elseif (isset($_GET['ip']) && isset($_GET['port']) && isset($_GET['thread']) && isset($_GET['time'])) {
     $ip = $_GET['ip'];
     $port = $_GET['port'];
     $thread = $_GET['thread'];
@@ -20,4 +28,3 @@ if (isset($_GET['ip']) && isset($_GET['port']) && isset($_GET['thread']) && isse
     echo "Please input ip, port, thread, time in URL";
 }
 ?>
-
