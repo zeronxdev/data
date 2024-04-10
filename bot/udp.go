@@ -1,12 +1,15 @@
 package main
 
 import (
+	"math/rand"
 	"net"
 	"os"
 	"strconv"
 	"sync"
 	"time"
 )
+
+const letterBytes = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
 func main() {
 	if len(os.Args) != 6 {
@@ -53,10 +56,7 @@ func main() {
 func sendUDPPackets(wg *sync.WaitGroup, addr string, duration, packetLength int) {
 	defer wg.Done()
 
-	udpPayload := make([]byte, packetLength)
-	for i := range udpPayload {
-		udpPayload[i] = 'X'
-	}
+	udpPayload := generateRandomString(packetLength)
 
 	timeout := time.Duration(duration) * time.Second
 	endTime := time.Now().Add(timeout)
@@ -69,11 +69,20 @@ func sendUDPPackets(wg *sync.WaitGroup, addr string, duration, packetLength int)
 
 	startTime := time.Now()
 	for time.Now().Before(endTime) {
-		_, err := conn.Write(udpPayload)
+		_, err := conn.Write([]byte(udpPayload))
 		if err != nil {
 			continue
 		}
 	}
 
 	time.Sleep(endTime.Sub(startTime))
+}
+
+func generateRandomString(length int) string {
+	rand.Seed(time.Now().UnixNano())
+	b := make([]byte, length)
+	for i := range b {
+		b[i] = letterBytes[rand.Intn(len(letterBytes))]
+	}
+	return string(b)
 }
