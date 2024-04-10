@@ -10,7 +10,7 @@ import (
 
 func main() {
 	if len(os.Args) != 6 {
-		println("Usage: go run udp.go <target_ip> <target_port> <num_connections> <duration> <packet_length>")
+		println("Usage: go run udp.go <ip> <port> <connections> <time> <packet_length>")
 		os.Exit(1)
 	}
 
