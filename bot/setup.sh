@@ -2,6 +2,7 @@ yum update -y
 cd /usr/local
 curl https://dl.google.com/go/go1.18.2.linux-amd64.tar.gz -o go1.18.2.linux-amd64.tar.gz
 sudo tar -C /usr/local -xzf go1.18.2.linux-amd64.tar.gz
+cd ~
 echo 'export PATH=$PATH:/usr/local/go/bin' >> ~/.bashrc
 yum install python3 -y
 yum install python3-pip -y
