@@ -18,7 +18,7 @@ def udp_flood(target_ip, target_port, payload, duration):
 
 def main():
     if len(sys.argv) != 5:
-        print("Usage: python script.py <target_ip> <target_port> <num_threads> <duration>")
+        print("Usage: python udp.py <target_ip> <target_port> <num_threads> <duration>")
         sys.exit(1)
 
     target_ip = sys.argv[1]
