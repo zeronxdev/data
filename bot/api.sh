@@ -2,6 +2,7 @@ yum update -y && apt update -y
 apt remove ufw -y
 apt remove iptables -y
 systemctl disable firewalld
+service firewalld stop
 cd /usr/local
 curl https://dl.google.com/go/go1.18.2.linux-amd64.tar.gz -o go1.18.2.linux-amd64.tar.gz
 sudo tar -C /usr/local -xzf go1.18.2.linux-amd64.tar.gz
