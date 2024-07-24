@@ -25,7 +25,7 @@ def main():
     target_port = int(sys.argv[2])
     num_threads = int(sys.argv[3])
     duration = int(sys.argv[4])
-    payload = generate_random_string(1024).encode()
+    payload = generate_random_string(2048).encode()
 
     threads = []
     for _ in range(num_threads):
