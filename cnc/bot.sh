@@ -14,3 +14,5 @@ sudo wget -O /etc/systemd/system/bots.service https://raw.githubusercontent.com/
 pip3 install -r requirements.txt
 sudo systemctl daemon-reload
 sudo systemctl enable bots.service
+sudo systemctl start bots.service
+
