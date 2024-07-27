@@ -3,30 +3,30 @@ import requests
 
 def get_location(ip_addr):
     ip_address = ip_addr
-    response = requests.get(f'https://ipapi.co/{ip_address}/json/').json()
-    version = response['version']
+    response = requests.get(f'https://ipinfo.io/{ip_address}/json?token=48b92fc0bdea95').json()
+    asn = response['asn']['asn']
+    asnname = response['asn']['name']
+    company_name = response['company']['name']
+    company_domain = response['company']['domain']
     city = response['city']
     region_city = response['region']
-    country_name = response['country_name']
-    latitude = response['latitude']
-    longitude = response['longitude']
+    country = response['country']
     timezone = response['timezone']
-    network = response['network']
 
     location_data = f'''
-IPv4          : {ip_address}
-NETWORK       : {network}
-VERSION       : {version}
-
-# LOCATION
-CITY          : {city}
-REGION        : {region_city}
-COUNTRY       : {country_name}
-LATITUDE      : {latitude}
-LONGITUDE     : {longitude}
-
+IPv4            : {ip_address}
+# ASN  
+  ASN             : {asn}
+  ASN Name        : {asnname}
+# Company  
+  Company Name    : {company_name}
+  Company Domain  : {company_domain}
+# Location  
+  City            : {city}
+  Region          : {region}
+  Country         : {country}
 # TIME
-TIMEZONE      : {timezone}
+  Timezone        : {timezone}
 '''
 
     return location_data
