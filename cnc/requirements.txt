@@ -1,0 +1,5 @@
+colorama
+cloudscraper
+pysocks
+scapy
+icmplib
